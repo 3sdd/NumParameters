@@ -62,9 +62,10 @@
                 }
             };
             req.open("GET", "model_parameters.json", false);			
-            req.send(null);										
+            req.send(null);	
+            return data									
         }
-        getJSON();
+        data=getJSON();
         
         model_names=[];
         num_parameters=[];
@@ -72,6 +73,8 @@
           model_names.push(data[i].model_name);
           num_parameters.push(data[i].num_parameters);
         }
+        console.log(model_names)
+        console.log(num_parameters)
 
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
