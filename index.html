@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+    <canvas id="myChart"></canvas>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+    <script>
+    //     function getCSV(){
+    //         var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
+    //         req.open("get", "model_parameters.csv", true); // アクセスするファイルを指定
+    //         req.send(null); // HTTPリクエストの発行
+            
+    //         // レスポンスが返ってきたらconvertCSVtoArray()を呼ぶ	
+    //         req.onload = function(){
+    //         convertCSVtoArray(req.responseText); // 渡されるのは読み込んだCSVデータ
+    //         }
+    //     }
+    
+    //     // 読み込んだCSVデータを二次元配列に変換する関数convertCSVtoArray()の定義
+    //     function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列として渡される   
+    //     var result = []; // 最終的な二次元配列を入れるための配列
+    //     var tmp = str.split("\n"); // 改行を区切り文字として行を要素とした配列を生成
+    
+    //     // 各行ごとにカンマで区切った文字列を要素とした二次元配列を生成
+    //     for(var i=0;i<tmp.length;++i){
+    //         result[i] = tmp[i].split(',');
+    //     }
+    
+    //     alert(result[1][2]); // 300yen
+    // }
+    
+        function getJSON() {
+            var req = new XMLHttpRequest();					
+            req.onreadystatechange = function() {
+                if(req.readyState == 4 && req.status == 200){	
+
+                    var data = JSON.parse(req.responseText);	
+                    var len = data.length;					
+                    console.log(len)
+                    // JSON のデータ数分処理
+                    for(var i=0; i<len; i++) {
+                        console.log("id: " + data[i].model_name + ", name: " + data[i].num_parameters);
+                    }
+
+                }
+            };
+            req.open("GET", "model_parameters.json", false);			
+            req.send(null);										
+        }
+        getJSON();
+
+
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["a", "v", "W", "R", "F", "S", "S"],
+            datasets: [{
+            label: 'ns',
+            data: [12, 19, 3, 17, 28, 24, 7]
+            }, 
+
+            ]
+        }
+        });
+    </script>
+  </body>
+</html>

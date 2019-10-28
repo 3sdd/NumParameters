@@ -1,0 +1,38 @@
+[
+    {
+        "model_name": "alexnet",
+        "num_parameters": 61100840
+    },
+    {
+        "model_name": "vgg11",
+        "num_parameters": 132863336
+    },
+    {
+        "model_name": "vgg11_bn",
+        "num_parameters": 132868840
+    },
+    {
+        "model_name": "vgg13",
+        "num_parameters": 133047848
+    },
+    {
+        "model_name": "vgg13_bn",
+        "num_parameters": 133053736
+    },
+    {
+        "model_name": "vgg16",
+        "num_parameters": 138357544
+    },
+    {
+        "model_name": "vgg16_bn",
+        "num_parameters": 138365992
+    },
+    {
+        "model_name": "vgg19",
+        "num_parameters": 143667240
+    },
+    {
+        "model_name": "vgg19_bn",
+        "num_parameters": 143678248
+    }
+]
