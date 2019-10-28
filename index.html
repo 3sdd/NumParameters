@@ -65,16 +65,22 @@
             req.send(null);										
         }
         getJSON();
-
+        
+        model_names=[];
+        num_parameters=[];
+        for(var i=0;i<data.length;i++){
+          model_names.push(data[i].model_name);
+          num_parameters.push(data[i].num_parameters);
+        }
 
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels:data.map(x=>x.model_name),
+            labels:model_names,
             datasets: [{
-            label: 'ns',
-            data: data.map(x=>x.num_parameters)
+            label: 'num parameters',
+            data: num_parameters
             }, 
 
             ]
