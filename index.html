@@ -71,10 +71,10 @@
         var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ["a", "v", "W", "R", "F", "S", "S"],
+            labels:data.map(x=>x.model_name),
             datasets: [{
             label: 'ns',
-            data: [12, 19, 3, 17, 28, 24, 7]
+            data: data.map(x=>x.num_parameters)
             }, 
 
             ]
