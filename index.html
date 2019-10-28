@@ -22,29 +22,24 @@
     <!-- chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
     <script>
-    //     function getCSV(){
-    //         var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
-    //         req.open("get", "model_parameters.csv", true); // アクセスするファイルを指定
-    //         req.send(null); // HTTPリクエストの発行
-            
-    //         // レスポンスが返ってきたらconvertCSVtoArray()を呼ぶ	
-    //         req.onload = function(){
-    //         convertCSVtoArray(req.responseText); // 渡されるのは読み込んだCSVデータ
-    //         }
-    //     }
+
     
-    //     // 読み込んだCSVデータを二次元配列に変換する関数convertCSVtoArray()の定義
-    //     function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列として渡される   
-    //     var result = []; // 最終的な二次元配列を入れるための配列
-    //     var tmp = str.split("\n"); // 改行を区切り文字として行を要素とした配列を生成
-    
-    //     // 各行ごとにカンマで区切った文字列を要素とした二次元配列を生成
-    //     for(var i=0;i<tmp.length;++i){
-    //         result[i] = tmp[i].split(',');
-    //     }
-    
-    //     alert(result[1][2]); // 300yen
-    // }
+          function initializeChart(model_names,num_parameters){
+          var ctx = document.getElementById("myChart").getContext('2d');
+          var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels:model_names,
+              datasets: [{
+              label: 'num parameters',
+              data: num_parameters
+              }, 
+
+              ]
+          }
+          });
+        }
+
     
         function getJSON() {
             var req = new XMLHttpRequest();					
@@ -53,42 +48,24 @@
 
                     var data = JSON.parse(req.responseText);	
                     var len = data.length;					
-                    console.log(len)
-                    // JSON のデータ数分処理
-                    for(var i=0; i<len; i++) {
-                        console.log("id: " + data[i].model_name + ", name: " + data[i].num_parameters);
+                    model_names=[];
+                    num_parameters=[];
+                    for(var i=0;i<data.length;i++){
+                      model_names.push(data[i].model_name);
+                      num_parameters.push(data[i].num_parameters);
                     }
+
+                    initializeChart(model_names,num_parameters)
 
                 }
             };
             req.open("GET", "model_parameters.json", false);			
-            req.send(null);	
-            return data									
+            req.responseType="json";
+            req.send();
         }
-        data=getJSON();
-        
-        model_names=[];
-        num_parameters=[];
-        for(var i=0;i<data.length;i++){
-          model_names.push(data[i].model_name);
-          num_parameters.push(data[i].num_parameters);
-        }
-        console.log(model_names)
-        console.log(num_parameters)
+        getJSON();
 
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels:model_names,
-            datasets: [{
-            label: 'num parameters',
-            data: num_parameters
-            }, 
 
-            ]
-        }
-        });
     </script>
   </body>
 </html>
