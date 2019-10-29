@@ -34,5 +34,25 @@
     {
         "model_name": "vgg19_bn",
         "num_parameters": 143678248
+    },
+    {
+        "model_name": "resnet18",
+        "num_parameters": 11689512
+    },
+    {
+        "model_name": "resnet34",
+        "num_parameters": 21797672
+    },
+    {
+        "model_name": "resnet50",
+        "num_parameters": 25557032
+    },
+    {
+        "model_name": "resnet101",
+        "num_parameters": 44549160
+    },
+    {
+        "model_name": "resnet152",
+        "num_parameters": 60192808
     }
 ]
