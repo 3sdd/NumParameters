@@ -54,7 +54,7 @@
       <script>
 
       
-          function updateChart(model_names,num_parameters){
+          function initializeChart(model_names,num_parameters){
             var ctx = document.getElementById("myChart").getContext('2d');
             var myChart = new Chart(ctx, {
             type: 'bar',
@@ -81,6 +81,7 @@
               }
             }
             });
+            return myChart;
           }
 
           
@@ -110,18 +111,31 @@
             model_names.push(json[i].model_name);
             num_parameters.push(json[i].num_parameters);
           }
-          updateChart(model_names,num_parameters)
+          var chart=initializeChart(model_names,num_parameters);
           
           $('input[name=customRadioInline]:radio').change(function(){
             var id_index=$(this).attr('id').slice(-1);
             console.log(id_index);
             if(id_index==0){
-              updateChart(model_names,num_parameters);
+              // initializeChart(model_names,num_parameters);
+              chart.data.datasets={
+                label: 'num parameters',
+                data: num_parameters      
+              };
             }else if(id_index==1){
-              updateChart(model_names,num_parameters.map(x=>x/1000));
+              chart.data.datasets={
+                label: 'num parameters',
+                data: num_parameters.map(x=>x/1000)      
+              };
+              // initializeChart(model_names,num_parameters.map(x=>x/1000));
             }else if(id_index==2){
-              updateChart(model_names,num_parameters.map(x=>x/1000000));
+              chart.data.datasets={
+                label: 'num parameters',
+                data: num_parameters.map(x=>x/1000000);    
+              };
+              // initializeChart(model_names,num_parameters.map(x=>x/1000000));
             }
+            chart.update();
           });
           
 
