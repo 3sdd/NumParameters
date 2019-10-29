@@ -118,21 +118,14 @@
             console.log(id_index);
             if(id_index==0){
               // initializeChart(model_names,num_parameters);
-              chart.data.datasets={
-                label: 'num parameters',
-                data: num_parameters      
-              };
+              chart.data.datasets[0].data=num_parameters;
             }else if(id_index==1){
-              chart.data.datasets={
-                label: 'num parameters',
-                data: num_parameters.map(x=>x/1000)      
-              };
+              chart.data.datasets[0].data=num_parameters.map(x=>x/1000);
+
               // initializeChart(model_names,num_parameters.map(x=>x/1000));
             }else if(id_index==2){
-              chart.data.datasets={
-                label: 'num parameters',
-                data: num_parameters.map(x=>x/1000000) 
-              };
+              chart.data.datasets[0].data=num_parameters.map(x=>x/1000000);
+
               // initializeChart(model_names,num_parameters.map(x=>x/1000000));
             }
             chart.update();
