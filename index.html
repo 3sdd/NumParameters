@@ -21,8 +21,24 @@
             </nav>
             <div class="col-md-10">
                 <h1>Parameter Chart</h1>
+                <span>単位</span>
+                <div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline1" name="customRadioInline" class="custom-control-input" checked> 
+                    <label class="custom-control-label" for="customRadioInline1">なし</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline2" name="customRadioInline" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadioInline2">K</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline3" name="customRadioInline" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadioInline3">M</label>
+                  </div>
+                </div>
 
-                  <canvas id="myChart" width="1600" height="800"></canvas>
+
+                <canvas id="myChart" width="1600" height="800"></canvas>
               </div>
             </div>
           </div>
@@ -68,7 +84,6 @@
           }
 
           
-          var data;
           function getJSON() {
               var req = new XMLHttpRequest();
               var json;
@@ -80,12 +95,7 @@
                       var len = data.length;					
                       json=data;
 
-                      for(var i=0;i<data.length;i++){
-                        model_names.push(data[i].model_name);
-                        num_parameters.push(data[i].num_parameters);
-                      }
 
-                      updateChart(model_names,num_parameters)
 
                   }
               };
@@ -94,9 +104,23 @@
               return json;
           }
           var json=getJSON();
-          console.log(json);
-          console.log(type(json));
 
+          for(var i=0;i<json.length;i++){
+            model_names.push(json[i].model_name);
+            num_parameters.push(json[i].num_parameters);
+          }
+          updateChart(model_names,num_parameters)
+          
+          $('input[name=customRadioInline]:radio').change(function(){
+            var rval=$(this).val();
+            if(rval===0){
+              updateChart(model_names,num_parameters);
+            }else if(rval==1){
+              updateChart(model_names,num_parameters.map(x=>x/1000));
+            }else if(rval==2){
+              updateChart(model_names,num_parameters.map(x=>x/1000000));
+            }
+          });
 
       </script>
   </body>
