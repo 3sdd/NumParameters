@@ -52,20 +52,30 @@
       <!-- chart.js -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
       <script>
+          // function getRandomColor(){
+          //   var letters = '0123456789ABCDEF';
+          //   var color = '#';
+          //   for (var i = 0; i < 6; i++) {
+          //     color += letters[Math.floor(Math.random() * 16)];
+          //   }
+          //   return color;
+          // }
 
       
           function initializeChart(model_names,num_parameters){
             var ctx = document.getElementById("myChart").getContext('2d');
+            // var randomColors=Array.from({length:5},(k,v)=>getRandomColor());
+            // var borderColors=randomColors.map(c=>c.a)
+
             var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels:model_names,
                 datasets: [{
-                label: 'num parameters',
-                data: num_parameters
-                }, 
-
-                ]
+                  label: 'num parameters',
+                  data: num_parameters,
+                  // backgroundColor:randomColors
+                }] 
             },
             options:{
               title:{
@@ -76,6 +86,18 @@
                 yAxes:[{
                   ticks:{
                     beginAtZero:true
+                  },
+                  scaleLabel:{
+                    display:true,
+                    labelString:"パラメータ数",
+                    fontSize:20,
+                  }
+                }],
+                xAxes:[{
+                  scaleLabel:{
+                    display:true,
+                    labelString:"モデル名",
+                    fontSize:20,
                   }
                 }]
               }
@@ -111,6 +133,8 @@
             model_names.push(json[i].model_name);
             num_parameters.push(json[i].num_parameters);
           }
+
+
           var chart=initializeChart(model_names,num_parameters);
           
           $('input[name=customRadioInline]:radio').change(function(){
