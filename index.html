@@ -143,13 +143,13 @@
             if(id_index==0){
               // initializeChart(model_names,num_parameters);
               chart.data.datasets[0].data=num_parameters;
-              myChart.options.scales.yAxes[0].ticks.userCallback=(item)=>item;
+              chart.options.scales.yAxes[0].ticks.userCallback=(item)=>item;
             }else if(id_index==1){
               chart.data.datasets[0].data=num_parameters.map(x=>x/1000);
-              myChart.options.scales.yAxes[0].ticks.userCallback=(item)=>item+" K";
+              chart.options.scales.yAxes[0].ticks.userCallback=(item)=>item+" K";
             }else if(id_index==2){
               chart.data.datasets[0].data=num_parameters.map(x=>x/1000000);
-              myChart.options.scales.yAxes[0].ticks.userCallback=(item)=>item+" M";
+              chart.options.scales.yAxes[0].ticks.userCallback=(item)=>item+" M";
             }
             chart.update();
           });
