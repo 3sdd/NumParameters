@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Parameter Chart</title>
   </head>
   <body>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -16,11 +16,11 @@
       </nav>
       <div class="container-fluid" >
         <div class="row">
-            <nav class="col-md-2">
+            <nav class="col-md-2 border-right">
 
             </nav>
-            <div class="col-md-10 bg-secondary">
-                <h1>Hello, world!</h1>
+            <div class="col-md-10">
+                <h1>Parameter Chart</h1>
 
                   <canvas id="myChart" width="1600" height="800"></canvas>
               </div>
@@ -38,7 +38,7 @@
       <script>
 
       
-            function initializeChart(model_names,num_parameters){
+          function updateChart(model_names,num_parameters){
             var ctx = document.getElementById("myChart").getContext('2d');
             var myChart = new Chart(ctx, {
             type: 'bar',
@@ -67,29 +67,35 @@
             });
           }
 
-      
+          
+          var data;
           function getJSON() {
-              var req = new XMLHttpRequest();					
+              var req = new XMLHttpRequest();
+              var json;
               req.onreadystatechange = function() {
                   if(req.readyState == 4 && req.status == 200){	
-
+                      model_names=[];
+                      num_parameters=[];			
                       var data = JSON.parse(req.responseText);	
                       var len = data.length;					
-                      model_names=[];
-                      num_parameters=[];
+                      json=data;
+
                       for(var i=0;i<data.length;i++){
                         model_names.push(data[i].model_name);
                         num_parameters.push(data[i].num_parameters);
                       }
 
-                      initializeChart(model_names,num_parameters)
+                      updateChart(model_names,num_parameters)
 
                   }
               };
               req.open("GET", "model_parameters.json", false);			
               req.send(null);
+              return json;
           }
-          getJSON();
+          var json=getJSON();
+          console.log(json);
+          console.log(type(json));
 
 
       </script>
