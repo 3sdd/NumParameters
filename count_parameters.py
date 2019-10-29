@@ -13,7 +13,12 @@ def count_trainable_parameters(model):
 
 
 if __name__=="__main__":
-    model_names=["alexnet","vgg11","vgg11_bn","vgg13","vgg13_bn","vgg16","vgg16_bn","vgg19","vgg19_bn"]
+    model_names=["alexnet",
+        #vgg
+        "vgg11","vgg11_bn","vgg13","vgg13_bn","vgg16","vgg16_bn","vgg19","vgg19_bn",
+        #resnet
+        "resnet18","resnet34","resnet50","resnet101","resnet152",
+        ]
 
     li=[]
     for model_name in model_names:
