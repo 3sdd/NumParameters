@@ -114,12 +114,12 @@
           
           $('input[name=customRadioInline]:radio').change(function(){
             var id_index=$(this).attr('id').slice(-1);
-            console.log(index_val);
-            if(rval==0){
+            console.log(id_index);
+            if(id_index==0){
               updateChart(model_names,num_parameters);
-            }else if(rval==1){
+            }else if(id_index==1){
               updateChart(model_names,num_parameters.map(x=>x/1000));
-            }else if(rval==2){
+            }else if(id_index==2){
               updateChart(model_names,num_parameters.map(x=>x/1000000));
             }
           });
