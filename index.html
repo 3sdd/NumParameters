@@ -113,9 +113,9 @@
           updateChart(model_names,num_parameters)
           
           $('input[name=customRadioInline]:radio').change(function(){
-            var rval=$(this).val();
-            console.log(rval);
-            if(rval===0){
+            var id_index=$(this).attr('id').slice(-1);
+            console.log(index_val);
+            if(rval==0){
               updateChart(model_names,num_parameters);
             }else if(rval==1){
               updateChart(model_names,num_parameters.map(x=>x/1000));
