@@ -54,5 +54,89 @@
     {
         "model_name": "resnet152",
         "num_parameters": 60192808
+    },
+    {
+        "model_name": "squeezenet1_0",
+        "num_parameters": 1248424
+    },
+    {
+        "model_name": "squeezenet1_1",
+        "num_parameters": 1235496
+    },
+    {
+        "model_name": "densenet121",
+        "num_parameters": 7978856
+    },
+    {
+        "model_name": "densenet169",
+        "num_parameters": 14149480
+    },
+    {
+        "model_name": "densenet161",
+        "num_parameters": 28681000
+    },
+    {
+        "model_name": "densenet201",
+        "num_parameters": 20013928
+    },
+    {
+        "model_name": "inception_v3",
+        "num_parameters": 27161264
+    },
+    {
+        "model_name": "googlenet",
+        "num_parameters": 13004888
+    },
+    {
+        "model_name": "shufflenet_v2_x0_5",
+        "num_parameters": 1366792
+    },
+    {
+        "model_name": "shufflenet_v2_x1_0",
+        "num_parameters": 2278604
+    },
+    {
+        "model_name": "shufflenet_v2_x1_5",
+        "num_parameters": 3503624
+    },
+    {
+        "model_name": "shufflenet_v2_x2_0",
+        "num_parameters": 7393996
+    },
+    {
+        "model_name": "mobilenet_v2",
+        "num_parameters": 3504872
+    },
+    {
+        "model_name": "resnext50_32x4d",
+        "num_parameters": 25028904
+    },
+    {
+        "model_name": "resnext101_32x8d",
+        "num_parameters": 88791336
+    },
+    {
+        "model_name": "wide_resnet50_2",
+        "num_parameters": 68883240
+    },
+    {
+        "model_name": "wide_resnet101_2",
+        "num_parameters": 126886696
+    },
+    {
+        "model_name": "mnasnet0_5",
+        "num_parameters": 2220824
+    },
+    {
+        "model_name": "mnasnet0_75",
+        "num_parameters": 3170656
+    },
+    {
+        "model_name": "mnasnet1_0",
+        "num_parameters": 4383312
+    },
+    {
+        "model_name": "mnasnet1_3",
+        "num_parameters": 6279432
     }
 ]
