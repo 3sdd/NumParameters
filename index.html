@@ -135,16 +135,17 @@
             chart.update();
           });
 
-          
+          //show or hide bar event
           for(var i=0;i<json.length;i++){
             model_name=json[i].model_name
             // toggleId=model_nam+"Toggle";
             toggleId="toggleId"+i;
             console.log(toggleId);
             toggleParent.append('<div><input type="checkbox" id="'+toggleId+'" data-toggle="toggle" data-size="xs" data-on="表示" data-off="非表示" checked><span>'+model_name+'</span></div>');
-            $(function(){
+
               $('#'+toggleId).change(function(){
                 var model_name=$('#'+toggleId+' ').next().text();
+                console.log(model_name)
                 console.log(chart.data.labels);
                 for(var cdi=0;chi<chart.data.labels.length;cdi++){
                   if(chart.data.labels[cdi]===model_name){
@@ -162,7 +163,6 @@
                 }
                 var val=$(this).val();
                 console.log(val);
-              })
             })
           }
       
