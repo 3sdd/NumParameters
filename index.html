@@ -143,31 +143,9 @@
 
 
           var chart=initializeChart(model_names,num_parameters);
-          
-          $('input[name=customRadioInline]:radio').change(function(){
-            var id_index=$(this).attr('id').slice(-1);
-            console.log(id_index);
-            if(id_index==0){
-              // initializeChart(model_names,num_parameters);
-              chart.data.datasets[0].data=num_parameters;
-              chart.options.scales.yAxes[0].ticks.userCallback=(item)=>item;
-            }else if(id_index==1){
-              chart.data.datasets[0].data=num_parameters.map(x=>x/1000);
-              chart.options.scales.yAxes[0].ticks.userCallback=(item)=>item+" K";
-            }else if(id_index==2){
-              chart.data.datasets[0].data=num_parameters.map(x=>x/1000000);
-              chart.options.scales.yAxes[0].ticks.userCallback=(item)=>item+" M";
-            }
-            chart.update();
-          });
 
-          var isDataActive=[]
-          model_names.forEach(item=>{
-            isDataActive.push(true);
-          });
 
           var toggleParent=$('#divToggleParent')
-          
           for(var i=0;i<json.length;i++){
             model_name=json[i].model_name
             // toggleId=model_nam+"Toggle";
@@ -176,15 +154,6 @@
             $(function(){
               $('#'+toggleId).change(function(){
                 console.log(toggleId)
-                // for(var li=0;li<char.data.labels.length;li++){
-                //   console.log($('#'+toggleId+' ').next().text())
-                //   if(chart.data.labels[i]===$('#'+toggleId+' ').next().text()){
-                //     console.log("found")
-                //     isDataActive[i]=false;
-
-                //   }
-                // }
-                // chart.data.datasets[0].data[i]
                 var model_name=$('#'+toggleId+' ').next().text()
                 console.log(chart.data.labels)
                 for(var cdi=0;chi<chart.data.labels.length;cdi++){
@@ -206,6 +175,27 @@
               })
             })
           }
+          
+          $('input[name=customRadioInline]:radio').change(function(){
+            var id_index=$(this).attr('id').slice(-1);
+            console.log(id_index);
+            if(id_index==0){
+              // initializeChart(model_names,num_parameters);
+              chart.data.datasets[0].data=num_parameters;
+              chart.options.scales.yAxes[0].ticks.userCallback=(item)=>item;
+            }else if(id_index==1){
+              chart.data.datasets[0].data=num_parameters.map(x=>x/1000);
+              chart.options.scales.yAxes[0].ticks.userCallback=(item)=>item+" K";
+            }else if(id_index==2){
+              chart.data.datasets[0].data=num_parameters.map(x=>x/1000000);
+              chart.options.scales.yAxes[0].ticks.userCallback=(item)=>item+" M";
+            }
+            chart.update();
+          });
+
+
+          
+
 
       </script>
   </body>
