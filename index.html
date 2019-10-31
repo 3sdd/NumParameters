@@ -144,11 +144,11 @@
             toggleParent.append('<div><input type="checkbox" id="'+toggleId+'" data-toggle="toggle" data-size="xs" data-on="表示" data-off="非表示" checked><span>'+model_name+'</span></div>');
 
               $('#'+toggleId).change(function(){
-                var model_name=$('#'+toggleId+' ').next().text();
+                var model_name=$('#'+toggleId).parent().children("span");
                 console.log(model_name)
                 console.log(chart.data.labels);
-                for(var cdi=0;chi<chart.data.labels.length;cdi++){
-                  if(chart.data.labels[cdi]===model_name){
+                for(var cdi=0;chi<chart.data.labels[0].length;cdi++){
+                  if(chart.data.labels[0][cdi]===model_name){
                     //remove item from chart
                     // var labels=chart.data.labels;
                     // chart.data.labels=labels;
