@@ -74,7 +74,7 @@
           //update chart unit 
           $('input[name=customRadioInline]:radio').change(function(){
             var id_index=$(this).attr('id').slice(-1);
-            console.log(id_index);
+            // console.log(id_index);
             if(id_index==0){
               // initializeChart(model_names,num_parameters);
               chart.data.datasets[0].data=num_parameters;
@@ -95,14 +95,14 @@
             (function(){
               var model_name=json[i].model_name;
               toggleId="toggleId"+i;
-              console.log(toggleId);
+              // console.log(toggleId);
               toggleParent.append('<div><input type="checkbox" id="'+toggleId+'" data-toggle="toggle" data-size="xs" data-on="表示" data-off="非表示" checked><span id="modelName_'+toggleId+'">'+model_name+'</span></div>');
               $('#'+toggleId).change(function(){
                 isChecked=$(this).prop('checked');
                 // console.log(val);
                 var tid=$(this).attr('id');
                 var model_name=$('#modelName_'+tid).text();
-                // console.log(model_name);
+                //チャートにひょじさせる
                 if(isChecked){//checked=true => checked = flse
                   var index=tid.slice(-1);
                   
@@ -133,7 +133,7 @@
                     }
                   }
 
-
+                //チャートから消す
                 }else{//checked=false => checked=true
                   for(var i=0;i<chart.data.datasets[0].data.length;i++){
                     if(chart.data.labels[i]==model_name){// found item in chart
@@ -149,44 +149,6 @@
               });
             })();
           }
-          //   model_name=json[i].model_name
-          //   // toggleId=model_nam+"Toggle";
-          //   toggleId="toggleId"+i;
-          //   console.log(toggleId);
-          //   toggleParent.append('<div><input type="checkbox" id="'+toggleId+'" data-toggle="toggle" data-size="xs" data-on="表示" data-off="非表示" checked><span id="modelName_'+toggleId+'">'+model_name+'</span></div>');
-
-          //     $('#'+toggleId).change(function(){
-
-
-          //         var model_name=$('#modelName_'+toggleId).text();
-          //        console.log(model_name);
-          //         for(var cdi=0;cdi<chart.data.labels.length;cdi++){
-          //         if(chart.data.labels[cdi]===model_name){
-          //           //remove item from chart
-          //           // var labels=chart.data.labels;
-          //           // chart.data.labels=labels;
-          //           // var data=chart.datasets[0].data
-          //           // data.splice(cdi,0);
-          //           // chart.datasets[0].data=data
-          //           // var val=$(this).val();
-          //           // $(this).prop('checked',!$(this).prop('checked'));
-          //           if($(this).prop("checked")){
-          //            //on
-          //             console.log("checked");
-          //             // chart.data.labels.splice(cdi,1);
-          //             // chart.data.datasets[0].data.splice(cdi,1);
-          //           }else{
-          //             //off
-          //             console.log("not checked");
-          //             chart.data.labels.splice(cdi,1);
-          //             chart.data.datasets[0].data.splice(cdi,1);
-          //           }
-          //           chart.update();
-          //           }
-          //           }
-          //       }
-
-
       </script>
   </body>
 </html>
