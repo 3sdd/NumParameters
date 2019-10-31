@@ -60,12 +60,23 @@
       <script>
           var toggleParent=$('#divToggleParent');
           var json=getJSON();
-          console.log(json);
+          // console.log(json);
           var model_names=[];
           var num_parameters=[];
           for(var i=0;i<json.length;i++){
             model_names.push(json[i].model_name);
             num_parameters.push(json[i].num_parameters);
+          }
+
+          function getChartParameters(){
+            var params=[]
+            var labels=chart.data.labels;
+            for(var i=0;i<labels.length;i++){
+              var index=model_names.indexOf(labels[i])
+              params.push(num_parameters[index]);
+            }
+            // console.log(params.length);
+            return params;
           }
 
 
@@ -75,7 +86,8 @@
           $('input[name=customRadioInline]:radio').change(function(){
             var id_index=$(this).attr('id').slice(-1);
             // console.log(id_index);
-            var params=chart.data.datasets[0].data;
+            var params=getChartParameters();
+
             if(id_index==0){
               chart.data.datasets[0].data=params;
               chart.options.scales.yAxes[0].ticks.userCallback=(item)=>item;
@@ -106,8 +118,8 @@
                 if(isChecked){//checked=true => checked = flse
                   var index=tid.slice(-1);
                   
-                  console.log("index"+index);
-                  console.log(model_names);
+                  // console.log("index"+index);
+                  // console.log(model_names);
                   if(chart.data.datasets[0].data.length==0){
                       chart.data.datasets[0].data.splice(0,0,num_parameters[index]);
                       chart.data.labels.splice(0,0,model_names[index]);
@@ -118,16 +130,14 @@
                       console.log(chart_model_name);
                       //名前からindex見つける
                       var j=model_names.indexOf(chart_model_name);
-                      console.log('i,j'+i+','+j);
+                      // console.log('i,j'+i+','+j);
                       if(i<j){
-                        console.log("Update");
-                        // chart.data.datasets[0].data.splice(i,1,num_parameters[j]);
-                        // chart.data.labels.splice(i,1,model_names[j]);
+                        // console.log("Update");
                         chart.data.datasets[0].data.splice(i,0,num_parameters[index]);
                         chart.data.labels.splice(i,0,model_names[index]);
                         chart.update();
-                        console.log(chart.data.datasets[0].data);
-                        console.log(chart.data.labels);
+                        // console.log(chart.data.datasets[0].data);
+                        // console.log(chart.data.labels);
                         break;
                       }
                     }
@@ -137,7 +147,7 @@
                 }else{//checked=false => checked=true
                   for(var i=0;i<chart.data.datasets[0].data.length;i++){
                     if(chart.data.labels[i]==model_name){// found item in chart
-                      console.log("found");
+                      // console.log("found");
                       //remove item
                       chart.data.datasets[0].data.splice(i,1);
                       chart.data.labels.splice(i,1);
