@@ -41,12 +41,10 @@
                     <label class="custom-control-label" for="customRadioInline2">M</label>
                   </div>
                 </div>
-
-
                 <canvas id="myChart" width="1600" height="800"></canvas>
-              </div>
             </div>
           </div>
+      </div>
 
 
       <!-- Optional JavaScript -->
@@ -60,51 +58,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
       <script src="num-parameter.js"></script>
       <script>
-          function initializeChart(model_names,num_parameters){
-            var ctx = document.getElementById("myChart").getContext('2d');
-            // var randomColors=Array.from({length:5},(k,v)=>getRandomColor());
-            // var borderColors=randomColors.map(c=>c.a)
-
-            var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels:model_names,
-                datasets: [{
-                  label: 'num parameters',
-                  data: num_parameters,
-                  // backgroundColor:randomColors
-                }] 
-            },
-            options:{
-              title:{
-                display:true,
-                text:"torchvision model num parameters"
-              },
-              scales:{
-                yAxes:[{
-                  ticks:{
-                    beginAtZero:true
-                  },
-                  scaleLabel:{
-                    display:true,
-                    labelString:"パラメータ数",
-                    fontSize:20,
-                  }
-                }],
-                xAxes:[{
-                  scaleLabel:{
-                    display:true,
-                    labelString:"モデル名",
-                    fontSize:20,
-                  }
-                }]
-              }
-            }
-            });
-            return myChart;
-          }
-
-          var toggleParent=$('#divToggleParent')
+          var toggleParent=$('#divToggleParent');
           var json=getJSON();
           console.log(json);
           var model_names=[];
@@ -115,7 +69,7 @@
           }
 
 
-          var chart=initializeChart(model_names,num_parameters);
+          var chart=initializeChart(json.map(x=>x.model_name),json.map(x=>x.num_parameters));
 
           //update chart unit 
           $('input[name=customRadioInline]:radio').change(function(){
@@ -135,40 +89,95 @@
             chart.update();
           });
 
+
           //show or hide bar event
           for(var i=0;i<json.length;i++){
-            model_name=json[i].model_name
-            // toggleId=model_nam+"Toggle";
-            toggleId="toggleId"+i;
-            console.log(toggleId);
-            toggleParent.append('<div><input type="checkbox" id="'+toggleId+'" data-toggle="toggle" data-size="xs" data-on="表示" data-off="非表示" checked><span id="modelName+'+toggleId+'">'+model_name+'</span></div>');
-
+            (function(){
+              var model_name=json[i].model_name;
+              toggleId="toggleId"+i;
+              console.log(toggleId);
+              toggleParent.append('<div><input type="checkbox" id="'+toggleId+'" data-toggle="toggle" data-size="xs" data-on="表示" data-off="非表示" checked><span id="modelName_'+toggleId+'">'+model_name+'</span></div>');
               $('#'+toggleId).change(function(){
-                var model_name=$('#modelName'+toggleId).text()
-                console.log(model_name)
-                console.log(chart.data.labels);
-                for(var cdi=0;cdi<chart.data.labels[0].length;cdi++){
-                  if(chart.data.labels[0][cdi]===model_name){
-                    //remove item from chart
-                    // var labels=chart.data.labels;
-                    // chart.data.labels=labels;
-                    // var data=chart.datasets[0].data
-                    // data.splice(cdi,0);
-                    // chart.datasets[0].data=data
-                    chart.data.labels.splice(cdi,1);
-                    chart.datasets[0].data.splice(cdi,1);
+                isChecked=$(this).prop('checked');
+                // console.log(val);
+                var tid=$(this).attr('id');
+                var model_name=$('#modelName_'+tid).text();
+                // console.log(model_name);
+                if(isChecked){//checked=true => checked = flse
+                  var index=tid.slice(-1);
+                  
+                  console.log("index"+index);
+                  console.log(model_names);
+                  for(var i=0;i<chart.data.datasets[0].data.length;i++){
+                    var chart_model_name=chart.data.labels[i];
+                    console.log(chart_model_name);
+                    //名前からindex見つける
+                    var j=model_names.indexOf(chart_model_name);
+                    console.log('i,j'+i+','+j);
+                    if(i<j){
+                      console.log("Update");
+                      // chart.data.datasets[0].data.splice(i,1,num_parameters[j]);
+                      // chart.data.labels.splice(i,1,model_names[j]);
+                      chart.data.datasets[0].data.splice(i,0,num_parameters[index]);
+                      chart.data.labels.splice(i,0,model_names[index]);
+                      chart.update();
+                      console.log(chart.data.datasets[0].data);
+                      console.log(chart.data.labels);
+                      break;
+                    }
+                  }
 
-                    chart.update();
+                }else{//checked=false => checked=true
+                  for(var i=0;i<chart.data.datasets[0].data.length;i++){
+                    if(chart.data.labels[i]==model_name){// found item in chart
+                      console.log("found");
+                      //remove item
+                      chart.data.datasets[0].data.splice(i,1);
+                      chart.data.labels.splice(i,1);
+                      chart.update();
+                    }
                   }
                 }
-                var val=$(this).val();
-                console.log(val);
-            })
+
+              });
+            })();
           }
-      
+          //   model_name=json[i].model_name
+          //   // toggleId=model_nam+"Toggle";
+          //   toggleId="toggleId"+i;
+          //   console.log(toggleId);
+          //   toggleParent.append('<div><input type="checkbox" id="'+toggleId+'" data-toggle="toggle" data-size="xs" data-on="表示" data-off="非表示" checked><span id="modelName_'+toggleId+'">'+model_name+'</span></div>');
+
+          //     $('#'+toggleId).change(function(){
 
 
-          
+          //         var model_name=$('#modelName_'+toggleId).text();
+          //        console.log(model_name);
+          //         for(var cdi=0;cdi<chart.data.labels.length;cdi++){
+          //         if(chart.data.labels[cdi]===model_name){
+          //           //remove item from chart
+          //           // var labels=chart.data.labels;
+          //           // chart.data.labels=labels;
+          //           // var data=chart.datasets[0].data
+          //           // data.splice(cdi,0);
+          //           // chart.datasets[0].data=data
+          //           // var val=$(this).val();
+          //           // $(this).prop('checked',!$(this).prop('checked'));
+          //           if($(this).prop("checked")){
+          //            //on
+          //             console.log("checked");
+          //             // chart.data.labels.splice(cdi,1);
+          //             // chart.data.datasets[0].data.splice(cdi,1);
+          //           }else{
+          //             //off
+          //             console.log("not checked");
+          //             chart.data.labels.splice(cdi,1);
+          //             chart.data.datasets[0].data.splice(cdi,1);
+          //           }
+          //           chart.update();
+          //           }
+          //           }
+          //       }
 
 
       </script>
