@@ -58,17 +58,8 @@
       <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
       <!-- chart.js -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+      <script src="num-parameter.js"></script>
       <script>
-          // function getRandomColor(){
-          //   var letters = '0123456789ABCDEF';
-          //   var color = '#';
-          //   for (var i = 0; i < 6; i++) {
-          //     color += letters[Math.floor(Math.random() * 16)];
-          //   }
-          //   return color;
-          // }
-
-      
           function initializeChart(model_names,num_parameters){
             var ctx = document.getElementById("myChart").getContext('2d');
             // var randomColors=Array.from({length:5},(k,v)=>getRandomColor());
@@ -113,29 +104,11 @@
             return myChart;
           }
 
-          
-          function getJSON() {
-              var req = new XMLHttpRequest();
-              var json;
-              req.onreadystatechange = function() {
-                  if(req.readyState == 4 && req.status == 200){	
-                      model_names=[];
-                      num_parameters=[];			
-                      var data = JSON.parse(req.responseText);	
-                      var len = data.length;					
-                      json=data;
-
-
-
-                  }
-              };
-              req.open("GET", "model_parameters.json", false);			
-              req.send(null);
-              return json;
-          }
+          var toggleParent=$('#divToggleParent')
           var json=getJSON();
-          var model_names=[]
-          var num_parameters=[]
+          console.log(json);
+          var model_names=[];
+          var num_parameters=[];
           for(var i=0;i<json.length;i++){
             model_names.push(json[i].model_name);
             num_parameters.push(json[i].num_parameters);
@@ -144,38 +117,7 @@
 
           var chart=initializeChart(model_names,num_parameters);
 
-
-          var toggleParent=$('#divToggleParent')
-          for(var i=0;i<json.length;i++){
-            model_name=json[i].model_name
-            // toggleId=model_nam+"Toggle";
-            toggleId="toggleId"+i;
-            toggleParent.append('<div><input type="checkbox" id="'+toggleId+'" data-toggle="toggle" data-size="xs" data-on="表示" data-off="非表示" checked><span>'+model_name+'</span></div>');
-            $(function(){
-              $('#'+toggleId).change(function(){
-                console.log(toggleId)
-                var model_name=$('#'+toggleId+' ').next().text()
-                console.log(chart.data.labels)
-                for(var cdi=0;chi<chart.data.labels.length;cdi++){
-                  if(chart.data.labels[cdi]===model_name){
-                    //remove item from chart
-                    // var labels=chart.data.labels;
-                    // chart.data.labels=labels;
-                    // var data=chart.datasets[0].data
-                    // data.splice(cdi,0);
-                    // chart.datasets[0].data=data
-                    chart.data.labels.splice(cdi,1);
-                    chart.datasets[0].data.splice(cdi,1);
-
-                    chart.update();
-                  }
-                }
-                var val=$(this).val();
-                console.log(val)
-              })
-            })
-          }
-          
+          //update chart unit 
           $('input[name=customRadioInline]:radio').change(function(){
             var id_index=$(this).attr('id').slice(-1);
             console.log(id_index);
@@ -192,6 +134,38 @@
             }
             chart.update();
           });
+
+          
+          for(var i=0;i<json.length;i++){
+            model_name=json[i].model_name
+            // toggleId=model_nam+"Toggle";
+            toggleId="toggleId"+i;
+            console.log(toggleId);
+            toggleParent.append('<div><input type="checkbox" id="'+toggleId+'" data-toggle="toggle" data-size="xs" data-on="表示" data-off="非表示" checked><span>'+model_name+'</span></div>');
+            $(function(){
+              $('#'+toggleId).change(function(){
+                var model_name=$('#'+toggleId+' ').next().text();
+                console.log(chart.data.labels);
+                for(var cdi=0;chi<chart.data.labels.length;cdi++){
+                  if(chart.data.labels[cdi]===model_name){
+                    //remove item from chart
+                    // var labels=chart.data.labels;
+                    // chart.data.labels=labels;
+                    // var data=chart.datasets[0].data
+                    // data.splice(cdi,0);
+                    // chart.datasets[0].data=data
+                    chart.data.labels.splice(cdi,1);
+                    chart.datasets[0].data.splice(cdi,1);
+
+                    chart.update();
+                  }
+                }
+                var val=$(this).val();
+                console.log(val);
+              })
+            })
+          }
+      
 
 
           
