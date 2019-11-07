@@ -23,6 +23,12 @@
                 <input type="checkbox" data-toggle="toggle" data-size="xs" data-on="表示" data-off="非表示" checked>
                 <span>alexnet</span>
               </div> -->
+              <div id="imageClassificationToggle">
+                
+              </div>
+              <div id="videoClassificationToggle">
+
+              </div>
             </div>
             <div class="col-md-10">
                 <h1>Parameter Chart</h1>
@@ -58,7 +64,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
       <script src="num-parameter.js"></script>
       <script>
-          var toggleParent=$('#divToggleParent');
+          // var toggleParent=$('#divToggleParent');
           var json=getJSON();
           // console.log(json);
           var model_names=[];
@@ -107,7 +113,18 @@
             (function(){
               var model_name=json[i].model_name;
               toggleId="toggleId"+i;
-              // console.log(toggleId);
+              
+              var toggleElementId;
+              var model_type=json[i].type;
+              switch(model_type){
+                case "image classification":
+                  toggleElementId="imageClassificationToggle";
+                  break;
+                case "video classification":
+                  toggleElementId="videoClassificationToggle";
+                  break;
+              }
+              var toggleParent=$("#"+toggleElementId)
               toggleParent.append('<div><input type="checkbox" id="'+toggleId+'" data-toggle="toggle" data-size="xs" data-on="表示" data-off="非表示" checked><span id="modelName_'+toggleId+'">'+model_name+'</span></div>');
               $('#'+toggleId).change(function(){
                 isChecked=$(this).prop('checked');
