@@ -34,9 +34,14 @@ def get_model_names():
 
         return model_names
 
+def get_video_model_names():
+    model_names=["r3d_18","mc3_18","r2plus1d_18"]
+
 if __name__=="__main__":
     model_names=get_model_names()
     li=[]
+
+    # image classification model
     for model_name in model_names:
 
         model=eval("torchvision.models."+model_name)()
@@ -46,14 +51,24 @@ if __name__=="__main__":
         print("tranable parameters : {0}({1} K,{2} M)".format(num_parameters,num_parameters/1000,num_parameters/1000000))
         print()
 
-        dic={"model_name":model_name,"num_parameters":num_parameters}
+        dic={"model_name":model_name,"num_parameters":num_parameters,"type":"image classification"}
         li.append(dic)
+
+    # video classification model
+    model_names=get_video_model_names()
+    for model_name in model_names:
+        model=eval("torchvision.models.video."+model_name)()
+        
+        num_parameters=count_trainable_parameters(model)
+        print("model name : ",model_name)
+        print("tranable parameters : {0}({1} K,{2} M)".format(num_parameters,num_parameters/1000,num_parameters/1000000))
+        print()
+
+        dic={"model_name":model_name,"num_parameters":num_parameters,"type":"video classification"}
+        li.append(dic)
+
     with open("model_parameters.json","w") as f:
         json.dump(li,f,indent=4)
-        # f.write("model_name,num_parameters\n")
-
-        # for item in li:
-        #     f.write(item["model_name"]+","+str(item["num_parameters"])+"\n")
 
     
     
