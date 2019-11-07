@@ -36,6 +36,7 @@ def get_model_names():
 
 def get_video_model_names():
     model_names=["r3d_18","mc3_18","r2plus1d_18"]
+    return model_names
 
 if __name__=="__main__":
     model_names=get_model_names()
